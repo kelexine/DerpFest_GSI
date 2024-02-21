@@ -4,15 +4,15 @@ echo
 echo "--------------------------------------"
 echo "        DerpFest AOSP 14.0 Build    "
 echo "                 by                   "
-echo "                KoysX               "
-echo "        Origin author: ponces  "
+echo "                kelexine               "
+echo "        Original author: ponces  "
 echo "--------------------------------------"
 echo
 
 set -e
 
-BL=$PWD/treble_DerpFest_GSI
-BD=$PWD/treble_DerpFest_GSI/GSI
+BL=$PWD/DerpFest_GSI
+BD=$PWD/DerpFest_GSI/GSI
 
 initRepos() {
     if [ ! -d .repo ]; then
@@ -67,38 +67,38 @@ buildTrebleApp() {
 }
 
 buildGappsVariant() {
-    echo "--> Building treble_arm64_bgN"
-    lunch treble_arm64_bgN-userdebug
+    echo "--> Building treble_a64_bgN"
+    lunch treble_a64_bgN-userdebug
     make -j$(nproc --all) installclean
     make -j$(nproc --all) systemimage
-    mv $OUT/system.img $BD/system-treble_arm64_bgN.img
+    mv $OUT/system.img $BD/system-treble_a64_bgN.img
     echo
 }
 
 buildMiniVariant() {
-    echo "--> Building treble_arm64_bgN-mini"
-    lunch treble_arm64_bgN_mini-userdebug
+    echo "--> Building treble_a64_bgN-mini"
+    lunch treble_a64_bgN_mini-userdebug
     make -j$(nproc --all) installclean
     make -j$(nproc --all) systemimage
-    mv $OUT/system.img $BD/system-treble_arm64_bgN-mini.img
+    mv $OUT/system.img $BD/system-treble_a64_bgN-mini.img
     echo
 }
 
 buildPicoVariant() {
-    echo "--> Building treble_arm64_bgN-pico"
-    lunch treble_arm64_bgN_pico-userdebug
+    echo "--> Building treble_a64_bgN-pico"
+    lunch treble_a64_bgN_pico-userdebug
     make -j$(nproc --all) installclean
     make -j$(nproc --all) systemimage
-    mv $OUT/system.img $BD/system-treble_arm64_bgN-pico.img
+    mv $OUT/system.img $BD/system-treble_a64_bgN-pico.img
     echo
 }
 
 generatePackages() {
     echo "--> Generating packages"
     buildDate="$(date +%Y%m%d)"
-    xz -cv $BD/system-treble_arm64_bgN.img -T0 > $BD/DerpFest-arm64_bgN-14.0-unofficial-$buildDate.img.xz
-    xz -cv $BD/system-treble_arm64_bgN-mini.img -T0 > $BD/DerpFest-arm64_bgN-mini-14.0-unofficial-$buildDate.img.xz
-    xz -cv $BD/system-treble_arm64_bgN-pico.img -T0 > $BD/DerpFest-arm64_bgN-pico-14.0-unofficial-$buildDate.img.xz
+    xz -cv $BD/system-treble_a64_bgN.img -T0 > $BD/DerpFest-a64_bgN-14.0-unofficial-$buildDate.img.xz
+    xz -cv $BD/system-treble_a64_bgN-mini.img -T0 > $BD/DerpFest-a64_bgN-mini-14.0-unofficial-$buildDate.img.xz
+    xz -cv $BD/system-treble_a64_bgN-pico.img -T0 > $BD/DerpFest-a64_bgN-pico-14.0-unofficial-$buildDate.img.xz
     rm -rf $BD/system-*.img
     echo
 }
@@ -112,14 +112,14 @@ generateOta() {
         while read file; do
             filename="$(basename $file)"
             if [[ $filename == *"mini"* ]]; then
-                name="treble_arm64_bgN-mini"
+                name="treble_a64_bgN-mini"
             elif [[ $filename == *"pico"* ]]; then
-                name="treble_arm64_bgN-pico"
+                name="treble_a64_bgN-pico"
             else
-                name="treble_arm64_bgN"
+                name="treble_a64_bgN"
             fi
             size=$(wc -c $file | awk '{print $1}')
-            url="https://github.com/KoysX/treble_DerpFest_GSI/releases/download/$version/$filename"
+            url="https://github.com/kelexine/DerpFest_GSI/releases/download/$version/$filename"
             json="${json} {\"name\": \"$name\",\"size\": \"$size\",\"url\": \"$url\"},"
         done
         json="${json%?}]}"

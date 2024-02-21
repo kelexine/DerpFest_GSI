@@ -8,11 +8,11 @@ To get started with building DerpFest AOSP GSI, you'll need to get familiar with
     ```
 - Clone this repo:
     ```
-    git clone https://github.com/KoysX/treble_DerpFest_GSI.git -b 14
+    git clone https://github.com/kelexine/DerpFest_GSI.git -b 14
     ```
 - Finally, start the build script:
     ```
-    bash treble_DerpFest_GSI/build.sh
+    bash DerpFest_GSI/build.sh
     ```
 
 ## Credits
